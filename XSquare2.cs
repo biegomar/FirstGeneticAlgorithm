@@ -14,8 +14,7 @@ namespace FirstGeneticAlgorithm
 
         public XSquare2(ICollection<string> population)
         {
-            this.population = population.ToList();
-            Generation = 1;
+            this.population = population.ToList();            
             calc();
         }       
 
@@ -38,8 +37,7 @@ namespace FirstGeneticAlgorithm
         }
 
         private void select()
-        {            
-            //Die besten 4 Ergebnisse sichern.
+        {                        
             population.AddRange(calcResult.OrderByDescending(x => x.Item2).Take(4).Select(x => x.Item1));
         }
 
@@ -47,7 +45,7 @@ namespace FirstGeneticAlgorithm
         {
             for (int i = 0; i < 2; i++)
             {
-                int position = GetRandomNumber(1, 7);
+                int position = getRandomNumber(1, 7);
                 population.Add(population[i * 2].Substring(0, position) + population[i * 2 + 1].Substring(position, 12 - position));
                 population.Add(population[i * 2 + 1].Substring(0, position) + population[i * 2].Substring(position, 12 - position));
             }          
@@ -59,7 +57,7 @@ namespace FirstGeneticAlgorithm
             {
                 for (int j = 0; j < 12; j++)
                 {
-                    int rand = GetRandomNumber(1, 12);
+                    int rand = getRandomNumber(1, 12);
                     if (rand == 1)
                     {
                         string item = population[i];
@@ -82,19 +80,19 @@ namespace FirstGeneticAlgorithm
             calc();
         }
 
-        public double Fitness { get; private set; }
-
-        public int Generation { get; private set; }
+        public double Fitness { get; private set; }        
 
         public int Result { get; private set; }
 
-        private static int GetRandomNumber(int min, int max)
+        private static int getRandomNumber(int min, int max)
         {
-            RNGCryptoServiceProvider c = new RNGCryptoServiceProvider();
-            byte[] random = new byte[4];
-            c.GetBytes(random);
-            int result = Math.Abs(BitConverter.ToInt32(random, 0));
-            return result % max + min;
+            using (RNGCryptoServiceProvider c = new RNGCryptoServiceProvider())
+            {
+                byte[] random = new byte[4];
+                c.GetBytes(random);
+                int result = Math.Abs(BitConverter.ToInt32(random, 0));
+                return result % max + min;
+            }
         }
     }
 }

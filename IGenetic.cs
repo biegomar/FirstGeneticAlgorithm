@@ -10,7 +10,6 @@ namespace FirstGeneticAlgorithm
     {
         void Evolve();        
         double Fitness { get; }
-        int Result { get;  }
-        int Generation { get; }
+        int Result { get;  } 
     }
 }

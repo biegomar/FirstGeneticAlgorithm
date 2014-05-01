@@ -44,9 +44,7 @@ namespace FirstGeneticAlgorithm
             {
                 sut.Evolve(); 
             }
-
-            sut.Evolve(); 
-
+           
             Assert.AreEqual(4095, sut.Result);
         }
     }
